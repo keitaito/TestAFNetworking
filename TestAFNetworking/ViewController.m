@@ -13,13 +13,16 @@
 @end
 
 @implementation ViewController
+{
+    NSString *url;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     NSLog(@"TestAFNetworking");
-    [self getURL:@"http://graph.facebook.com/keitaitok"];
+    url = @"http://graph.facebook.com/keitaitok";
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,10 +42,16 @@
          success:^(NSURLSessionDataTask *task, id responseObject) {
              // Success
              NSLog(@"responseObject: %@", responseObject);
+             NSString *name = [responseObject objectForKey:@"name"];
+             NSLog(@"name: %@", name);
+             self.nameLabel.text = name;
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              // Error
              NSLog(@"Error: %@", error);
          }];
 }
 
+- (IBAction)getURLButton:(id)sender {
+    [self getURL:url];
+}
 @end
